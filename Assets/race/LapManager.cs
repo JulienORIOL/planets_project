@@ -7,7 +7,6 @@ public class LapManager : MonoBehaviour
 {
     public List<Checkpoint> checkpoints;
     public GameObject prefab;
-    public Transform Spawnpoint;
     public UIManager uiManager;
     public int totalLaps = 3;
     private int lastPlayerCheckpoint = -1;
@@ -142,7 +141,7 @@ public class LapManager : MonoBehaviour
     // Utilisez cette méthode pour commencer le mouvement, par exemple :
     public void StartMovingPrefab()
     {
-        StartCoroutine(MovePrefabOnYAxis(prefab, -16.53f, -7.49f, 2f)); // Déplace prefab de -12.12 à -4.04 sur l'axe Y en 3 secondes
+        StartCoroutine(MovePrefabOnYAxis(prefab, -17.8f, -8.4373f, 2f)); // Déplace prefab de -12.12 à -4.04 sur l'axe Y en 3 secondes
     }
 
 }
