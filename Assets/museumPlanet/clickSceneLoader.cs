@@ -6,7 +6,6 @@ public class clickSceneLoader : MonoBehaviour
 {
 	public void LoadLevel()
 	{
-		SceneManager.LoadScene("raceScene");
+		SceneManager.LoadScene("MuseumScene");
 	}
 }
-

@@ -31,16 +31,15 @@ public class SpotlightScript : MonoBehaviour
         currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
         // Pour réinitialiser mon compteur à la main
-        //PlayerPrefs.SetInt("CurrentLevel", 0);
-        //PlayerPrefs.Save();
+        PlayerPrefs.SetInt("CurrentLevel", 3);
+        PlayerPrefs.Save();
 
         portalRotations = new Vector3[]
         {
-            new Vector3(52.197f, 87.567f, 88.067f),
-            new Vector3(53.388f, 133.82f, 123.055f),
-            new Vector3(54.313f, 183.925f, 159.199f),
-            new Vector3(52.699f, 226.3f, 194.462f),
-            new Vector3(50.54f, 274.493f, 229.645f)
+            new Vector3(125.825f, -53.39301f, -48.38098f),
+            new Vector3(124.859f, 1.662994f, -4.427979f),
+            new Vector3(129.118f, 55.272f, 48.58501f),
+            new Vector3(120.433f, 0f, 0f)
         };
         // S'assure que le spotlight est orienté vers le premier portail au début
     }
@@ -48,7 +47,7 @@ public class SpotlightScript : MonoBehaviour
     public void GoToNextLevel()
     {
         Debug.Log("On passe dans la méthode NextLevel");
-        currentLevel = (currentLevel + 1) % portalRotations.Length; // Incrémente et boucle le niveau
+        currentLevel = currentLevel + 1; // Incrémente et boucle le niveau
         PlayerPrefs.SetInt("CurrentLevel", currentLevel);
         PlayerPrefs.Save();
         UpdateSpotlightRotation(); // Met à jour la rotation du spotlight
@@ -57,6 +56,29 @@ public class SpotlightScript : MonoBehaviour
     void UpdateSpotlightRotation()
     {
         Debug.Log(currentLevel);
-        spotlight.transform.rotation = Quaternion.Euler(portalRotations[currentLevel]); // Oriente le spotlight
+        if(currentLevel < portalRotations.Length)
+        {
+            spotlight.transform.rotation = Quaternion.Euler(portalRotations[currentLevel]); // Oriente le spotlight
+
+            if (currentLevel == portalRotations.Length - 1)
+            {
+                spotlight.spotAngle = 60;
+                spotlight.intensity = 7;
+            }
+        } else
+        {
+            Debug.Log("On a pas de position a update");
+        }
+        
+    }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
+    }
+
+    public int GetPortalRotationsLength()
+    {
+        return portalRotations.Length;
     }
 }

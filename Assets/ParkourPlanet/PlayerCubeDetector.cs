@@ -15,8 +15,8 @@ public class PlayerCubeDetector : MonoBehaviour
             // Incrémente le timer si le joueur n'est pas sur un cube
             timeSinceLastCube += Time.deltaTime;
 
-            // Si le timer dépasse 1 seconde, recharge la scène
-            if (timeSinceLastCube >= 1f)
+            // Si le timer dépasse 2 seconde, recharge la scène
+            if (timeSinceLastCube >= 2f)
             {
                 // Utilisez SceneManager pour recharger la scène actuelle
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
