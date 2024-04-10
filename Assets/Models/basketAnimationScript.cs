@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class basketAnimationScript : MonoBehaviour
 {
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     void Start()
     {
@@ -17,7 +17,19 @@ public class basketAnimationScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Lance l'animation
-            animator.SetTrigger("StartAnimation"); // Assure-toi que "StartAnimation" est le nom de ton trigger dans l'Animator
+            Debug.Log("Triggered");
+
+            animator.SetBool("playBall", true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Vérifie si l'objet entrant est bien le joueur
+        if (other.CompareTag("Player"))
+        {
+            // Lance l'animation
+            animator.SetBool("playBall", false);
         }
     }
 }
