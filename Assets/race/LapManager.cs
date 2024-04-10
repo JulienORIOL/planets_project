@@ -27,7 +27,7 @@ public class LapManager : MonoBehaviour
     void Start()
     {
         ListenCheckpoints(true);
-        UpdatePlayerLap("Reconnaissance");
+        UpdatePlayerLap("Découverte");
     }
 
     private void ListenCheckpoints(bool subscribe)
