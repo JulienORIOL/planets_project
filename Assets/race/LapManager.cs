@@ -29,7 +29,7 @@ public class LapManager : MonoBehaviour
     void Start()
     {
         ListenCheckpoints(true);
-        UpdatePlayerLap("Départ !!!");
+        UpdatePlayerLap("Reconnaissance");
     }
 
     private void ListenCheckpoints(bool subscribe)
@@ -119,7 +119,7 @@ public class LapManager : MonoBehaviour
     {
         currentPlayerLap = 0;
         lastPlayerCheckpoint = -1;
-        UpdatePlayerLap("Départ !!!");
+        UpdatePlayerLap("Reconnaissance");
     }
 
     private IEnumerator MovePrefabOnYAxis(GameObject prefab, float startY, float endY, float duration)
