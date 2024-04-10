@@ -159,7 +159,7 @@ public class RaceManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)) // if the player press R, we restart
         {
-            // if (raceStatus != 2) return; // uncomment on release
+            if (raceStatus != 2) return; // uncomment on release
             RestartGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
