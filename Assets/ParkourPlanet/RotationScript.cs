@@ -5,6 +5,7 @@ using UnityEngine;
 public class RotationScript : MonoBehaviour
 {
     public float rotationSpeed = 50f;
+    public PlayerCubeDetector playerCubeDetector;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,11 @@ public class RotationScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerCubeDetector == null) return; // Assurez-vous qu'une référence à PlayerCubeDetector est établie
+
+        // Récupérer la position actuelle du cube depuis PlayerCubeDetector
+        Vector3 cubePosition = playerCubeDetector.GetCurrentCubePosition();
+
         // Récupérer les entrées clavier pour la rotation
         float horizontalInput = 0f;
         float verticalInput = 0f;
@@ -41,10 +47,7 @@ public class RotationScript : MonoBehaviour
         float horizontalRotationAmount = horizontalInput * rotationSpeed * Time.deltaTime;
         float verticalRotationAmount = verticalInput * rotationSpeed * Time.deltaTime;
 
-        // Effectuer la rotation de l'objet autour de l'axe vertical (Y)
-        transform.Rotate(Vector3.up, horizontalRotationAmount, Space.World);
-
-        // Effectuer la rotation de l'objet autour de l'axe horizontal (X)
-        transform.Rotate(Vector3.right, verticalRotationAmount, Space.World);
+        transform.RotateAround(cubePosition, Vector3.forward, horizontalRotationAmount);
+        transform.RotateAround(cubePosition, Vector3.right, verticalRotationAmount);
     }
 }

@@ -44,6 +44,7 @@ namespace UnityChan
 			if (Input.GetKeyDown ("up") || Input.GetButton ("Jump")) {
 				// ブーリアンNextをtrueにする
 				anim.SetBool ("Next", true);
+				Debug.Log("Jump button caught");
 			}
 		
 			// ↓キーが押されたら、ステートを前に戻す処理
