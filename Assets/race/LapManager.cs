@@ -6,6 +6,8 @@ using UnityEngine;
 public class LapManager : MonoBehaviour
 {
     public List<Checkpoint> checkpoints;
+    public GameObject prefab;
+    public Transform Spawnpoint;
     public UIManager uiManager;
     public int totalLaps = 3;
     private int lastPlayerCheckpoint = -1;
@@ -70,6 +72,7 @@ public class LapManager : MonoBehaviour
                     raceManager.SetRaceStatus(2);
                     string classement = rank + (rank > 1 ? "ème" : "er");
                     UpdatePlayerLap("Course terminée\n\nTu as fini " + classement + " !\n\n appuie sur R pour recommencer");
+                    StartMovingPrefab();
                     return;
                 }
                 if (currentPlayerLap == totalLaps)
@@ -118,4 +121,28 @@ public class LapManager : MonoBehaviour
         lastPlayerCheckpoint = -1;
         UpdatePlayerLap("Départ !!!");
     }
+
+    private IEnumerator MovePrefabOnYAxis(GameObject prefab, float startY, float endY, float duration)
+    {
+        float time = 0f;
+        Vector3 startPosition = new Vector3(prefab.transform.position.x, startY, prefab.transform.position.z);
+        Vector3 endPosition = new Vector3(prefab.transform.position.x, endY, prefab.transform.position.z);
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            prefab.transform.position = Vector3.Lerp(startPosition, endPosition, time / duration);
+            yield return null;
+        }
+
+        // Assurez-vous que la position finale est exactement endY après la boucle
+        prefab.transform.position = endPosition;
+    }
+
+    // Utilisez cette méthode pour commencer le mouvement, par exemple :
+    public void StartMovingPrefab()
+    {
+        StartCoroutine(MovePrefabOnYAxis(prefab, -16.53f, -7.49f, 2f)); // Déplace prefab de -12.12 à -4.04 sur l'axe Y en 3 secondes
+    }
+
 }

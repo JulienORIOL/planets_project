@@ -3,7 +3,11 @@ guid: 43245883d31f7fa4ba9dd0c0ac74d146
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - prefab: {instanceID: 0}
+  - Spawnpoint: {instanceID: 0}
+  - uiManager: {instanceID: 0}
+  - raceManager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

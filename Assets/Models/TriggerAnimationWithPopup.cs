@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System.Collections;
 
 public class TriggerAnimationWithPopup : MonoBehaviour
 {
     public UnityEvent myEvent;
     public GameObject popup;
+    public GameObject prefab;
+    public Transform Spawnpoint;
     private bool isPlayerNear = false;
 
     void Start()
@@ -37,6 +40,13 @@ public class TriggerAnimationWithPopup : MonoBehaviour
         {
             myEvent.Invoke();
             popup.SetActive(false);
+            StartCoroutine(InstantiateAfterDelay(8f)); // Start the coroutine with a 4 second delay
         }
+    }
+
+    private IEnumerator InstantiateAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Instantiate(prefab, Spawnpoint.position, Spawnpoint.rotation);
     }
 }
