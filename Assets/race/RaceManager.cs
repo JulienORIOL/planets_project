@@ -22,9 +22,6 @@ public class RaceManager : MonoBehaviour
         Cursor.visible = false;
         raceManager = GameObject.Find("RaceManager").GetComponent<RaceManager>();
         numberOfCheckpoints = GameObject.FindGameObjectsWithTag("Checkpoint").Length;
-        raceStatus = 0;
-
-        PlacementManager placementManager = GameObject.Find("Grid").GetComponent<PlacementManager>();
 
         // get all the cars
         GameObject[] cars = GameObject.FindGameObjectsWithTag("AI");
@@ -35,8 +32,12 @@ public class RaceManager : MonoBehaviour
             if (!carController.isInvisible)
             {
                 carController.setInitialPlacement(i);
-                carController.reset(placementManager);
+                carController.reset();
                 i++;
+            }
+            else
+            {
+                carController.reset();
             }
         }
 
@@ -44,7 +45,7 @@ public class RaceManager : MonoBehaviour
         player.GetComponent<CarControler>().setInitialPlacement(i);
         player.GetComponent<CarControler>().reset();
 
-        
+
 
         followPlayer = GameObject.Find("Main Camera").GetComponent<FollowPlayer>();
         // switch to invisible mode for the camera
@@ -120,24 +121,31 @@ public class RaceManager : MonoBehaviour
 
     public void SetRaceStatus(int status)
     {
-        raceStatus = status;
         if (status == 1)
         {
+            uiManager = GameObject.Find("Paneau").GetComponent<UIManager>();
             followPlayer.switchToRace();
+            StartCoroutine(StartRaceCountdown());
+            return;
         }
         else if (status == 2)
         {
             CarControler player = GameObject.FindGameObjectWithTag("Player").GetComponent<CarControler>();
             followPlayer.switchToDrone();
+            raceStatus = status;
+        }
+        else
+        {
+            raceStatus = status;
         }
     }
+
 
     public int GetPlayerRanking()
     {
         List<GameObject> ranking = GetCurrentRanking();
         for (int i = 0; i < ranking.Count; i++)
         {
-            Debug.Log(ranking[i].tag);
             if (ranking[i].tag == "Player")
             {
                 return i + 1;
@@ -151,7 +159,7 @@ public class RaceManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)) // if the player press R, we restart
         {
-            if (raceStatus != 2) return;
+            // if (raceStatus != 2) return; // uncomment on release
             RestartGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
@@ -163,7 +171,7 @@ public class RaceManager : MonoBehaviour
     void RestartGame()
     {
         // reset the race status
-        raceStatus = 0;
+        raceStatus = -1;
 
         // call back invisible car
         invisibleAI.SetActive(true);
@@ -177,16 +185,20 @@ public class RaceManager : MonoBehaviour
         // reset the LapManager
         GameObject.Find("Arrival").GetComponent<LapManager>().Reset();
 
+        System.Threading.Thread.Sleep(20);
+
+        // reset the race status
+        raceStatus = 0;
+
         Start();
     }
 
     void ResetCars()
     {
-        PlacementManager placementManager = GameObject.Find("Grid").GetComponent<PlacementManager>();
         GameObject[] cars = GameObject.FindGameObjectsWithTag("AI");
         foreach (GameObject car in cars)
         {
-            car.GetComponent<AICarController>().reset(placementManager);
+            car.GetComponent<AICarController>().reset();
         }
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -200,5 +212,24 @@ public class RaceManager : MonoBehaviour
         {
             checkpoint.GetComponent<Checkpoint>().reset();
         }
+    }
+
+    IEnumerator StartRaceCountdown()
+    {
+        uiManager = GameObject.Find("Paneau").GetComponent<UIManager>();
+        uiManager.UpdateLapText("Départ dans 3");
+
+        yield return new WaitForSeconds(1);
+
+        uiManager.UpdateLapText("Départ dans 2");
+
+        yield return new WaitForSeconds(1);
+
+        uiManager.UpdateLapText("Départ dans 1");
+
+        yield return new WaitForSeconds(1);
+
+        uiManager.UpdateLapText("C'est parti !");
+        raceStatus = 1;
     }
 }

@@ -97,26 +97,27 @@ public class AICarController : MonoBehaviour
     }
 
     
-    public void reset(PlacementManager placementManager)
+    public void reset()
     {
+        PlacementManager placementManager = GameObject.Find("Grid").GetComponent<PlacementManager>();
         currentTurn = 0;
         lastPlayerCheckpoint = -1;
         currentAIPointIndex = 0;
+        rg.rotation = Quaternion.Euler(0, 0, 0);
+        rg.velocity = new Vector3(0, 0, 0);
         if (isInvisible)
         {
-            transform.position = placementManager.GetInvisibleCarPosition();
+            rg.position = placementManager.GetInvisibleCarPosition();
         }
         else
         {
             if (placementManager != null) {
                 placementManager = GameObject.Find("Grid").GetComponent<PlacementManager>();
-                transform.position = placementManager.GetStartingPosition(initialPlacement);
+                rg.position = placementManager.GetStartingPosition(initialPlacement);
             } else {
-                transform.position = new Vector3(0, 0, 0);
+                rg.position = new Vector3(0, 0, 0);
             }
         }
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-        Debug.Log("reset car " + gameObject.name + " to " + transform.position + "(" + initialPlacement + ")");
     }
 
     public void setInitialPlacement(int placement)

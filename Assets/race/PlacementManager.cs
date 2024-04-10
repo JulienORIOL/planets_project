@@ -7,10 +7,6 @@ public class PlacementManager : MonoBehaviour
 {
 
     private List<Vector3> startingPositions = new List<Vector3>();
-    private double left = 0;
-    private double right = 5.4;
-    private double front = 0;
-    private double lng = -5;
 
     void Awake()
     {
@@ -37,7 +33,7 @@ public class PlacementManager : MonoBehaviour
             int gridX = (int) child.position.x;
             int gridZ = (int) child.position.z;
 
-            Vector3 gridPosition = new Vector3(gridX, 20, gridZ);
+            Vector3 gridPosition = new Vector3(gridX, 0, gridZ);
 
             if (startingPositions.Count <= transform.childCount)
             {
@@ -47,7 +43,7 @@ public class PlacementManager : MonoBehaviour
             {
                 startingPositions[i] = gridPosition;
             }
-        }    
+        }
     }
 
     public Vector3 GetStartingPosition(int position)
@@ -62,8 +58,9 @@ public class PlacementManager : MonoBehaviour
     public Vector3 GetInvisibleCarPosition()
     {
         // retrieve last checkpoint position
-        LapManager arrival = GameObject.Find("Arrival").GetComponent<LapManager>();
-        Checkpoint checkpoint = arrival.getLastCheckpoint();
-        return new Vector3(checkpoint.transform.position.x, 20, checkpoint.transform.position.z);
+        Vector3 position1 = GetStartingPosition(0);
+        Vector3 position2 = GetStartingPosition(1);
+
+        return new Vector3((position1.x + position2.x) / 2, 0, (position2.z - position1.z) * (startingPositions.Count + 2) + position1.z);
     }
 }

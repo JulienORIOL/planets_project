@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
+using UnityEditor.MPE;
 using UnityEngine;
 
 
@@ -113,8 +114,10 @@ public class CarControler : MonoBehaviour
         currentTurn = 0;
         lastPlayerCheckpoint = -1;
         currentAIPointIndex = 0;
-        transform.position = new Vector3(0, 0, 0);
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        rg.velocity = new Vector3(0, 0, 0);
+        rg.rotation = Quaternion.Euler(0, 0, 0);
+        PlacementManager placementManager = GameObject.Find("Grid").GetComponent<PlacementManager>();
+        rg.position = placementManager.GetStartingPosition(initialPlacement);
     }
 
     public void setInitialPlacement(int placement)
