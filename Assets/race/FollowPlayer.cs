@@ -13,7 +13,7 @@ public class FollowPlayer : MonoBehaviour
     private float[][] camPreset = new float[][] {
         new float[] { 5f, 5f, 2f }, // drone mode
         new float[] { 15f, 8f, 5f }, // 3rd person mode
-        new float[] { 80f, 0f, 0f } // 1st person mode
+        new float[] { 80f, 0.2f, 0f } // 1st person mode
     };
 
     // Start is called before the first frame update
@@ -62,9 +62,16 @@ public class FollowPlayer : MonoBehaviour
         if (presetIndex == 2) // 1st person mode
         {
             // hide the car
-            player.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            foreach (MeshRenderer element in GameObject.Find("player").GetComponentsInChildren<MeshRenderer>())
+            {
+                element.enabled = false;
+            }
         } else {
-            player.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            // show the car
+            foreach (MeshRenderer element in GameObject.Find("player").GetComponentsInChildren<MeshRenderer>())
+            {
+                element.enabled = true;
+            }
         }
         rotationSpeed = camPreset[presetIndex][0];
         distanceBehind = camPreset[presetIndex][1];
