@@ -53,6 +53,9 @@ public class CarControler : MonoBehaviour
             if (inputY > 0.001)
             {
                 rg.AddForce(this.transform.forward * speed, ForceMode.Acceleration);
+            } else if (inputY < -0.001)
+            {
+                rg.AddForce(this.transform.forward * speed, ForceMode.Acceleration);
             }
             float rotation = inputX * steerSpeed * Time.fixedDeltaTime;
             transform.Rotate(0, rotation, 0, Space.World);
