@@ -30,10 +30,13 @@ public class PlacementManager : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
-            int gridX = (int) child.position.x;
-            int gridZ = (int) child.position.z;
+            double gridX = child.position.x;
+            double gridZ = child.position.z;
 
-            Vector3 gridPosition = new Vector3(gridX, 0, gridZ);
+            // apply offset to the front of the car
+            gridZ -= 1.5;
+
+            Vector3 gridPosition = new Vector3((int) gridX, 0, (int) gridZ);
 
             if (startingPositions.Count <= transform.childCount)
             {
