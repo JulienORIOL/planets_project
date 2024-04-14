@@ -159,7 +159,8 @@ public class RaceManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)) // if the player press R, we restart
         {
-            if (raceStatus != 2) return; // uncomment on release
+            if (raceStatus != 2) return; // if the race isn't finished, we don't restart
+            if (GameObject.Find("Arrival").GetComponent<LapManager>().getIsWinner()) return; // if the player has won, we don't restart, we wait for the portal
             RestartGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))

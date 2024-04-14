@@ -11,6 +11,7 @@ public class LapManager : MonoBehaviour
     public int totalLaps = 3;
     private int lastPlayerCheckpoint = -1;
     private int currentPlayerLap = 0;
+    private bool isWinner = false;
     public RaceManager raceManager; // Référence vers le gestionnaire de course
 
     void UpdatePlayerLap(int lap)
@@ -70,7 +71,16 @@ public class LapManager : MonoBehaviour
                     int rank = raceManager.GetPlayerRanking();
                     raceManager.SetRaceStatus(2);
                     string classement = rank + (rank > 1 ? "ème" : "er");
-                    UpdatePlayerLap("Course terminée\n\nTu as fini " + classement + " !\n\n appuie sur R pour recommencer");
+                    if (rank == 1) 
+                    {
+                        UpdatePlayerLap("Course terminée\n\nBravo princesse, tu as relevé ce premier défi !\nCeci n'est que le début de ton aventure\nUn portail s'est ouvert pour toi");
+                        isWinner = true;
+                    }
+                    else
+                    {
+                        UpdatePlayerLap("Course terminée\n\nTu as fini " + classement + " !\n\nCe n'est pas suffisant pour vaincre mes sbires,\nappuie sur R pour recommencer");
+                        return;
+                    }
                     StartMovingPrefab();
                     return;
                 }
@@ -141,7 +151,11 @@ public class LapManager : MonoBehaviour
     // Utilisez cette méthode pour commencer le mouvement, par exemple :
     public void StartMovingPrefab()
     {
-        StartCoroutine(MovePrefabOnYAxis(prefab, -17.8f, -8.4373f, 2f)); // Déplace prefab de -12.12 à -4.04 sur l'axe Y en 3 secondes
+        StartCoroutine(MovePrefabOnYAxis(prefab, 31f, -8f, 0f)); // Déplace prefab de -13 à 8 sur l'axe Y en 3 secondes
     }
 
+    public bool getIsWinner()
+    {
+        return isWinner;
+    }
 }
