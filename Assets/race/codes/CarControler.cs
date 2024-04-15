@@ -36,6 +36,7 @@ public class CarControler : MonoBehaviour
 
     void Update() // Get keyboard inputs
     {
+        if (raceManager.GetRaceStatus() == 0) return;
         inputY = Input.GetAxis("Vertical");
         inputX = Input.GetAxis("Horizontal");
         // "v" key to switch to drone mode
@@ -48,6 +49,32 @@ public class CarControler : MonoBehaviour
         else
         {
             transform.Find("sparks").gameObject.SetActive(false);
+        }
+
+        // if the player advance, play the sound of the engine
+        if (inputY > 0.5)
+        {
+            if (!transform.Find("AudioMoteur").GetComponent<AudioSource>().isPlaying)
+            {
+                transform.Find("AudioMoteur").GetComponent<AudioSource>().Play();
+            }
+        }
+        else
+        {
+            transform.Find("AudioMoteur").GetComponent<AudioSource>().Stop();
+        }
+
+        // if the player turn, play the sound of the tires
+        if (inputX > 0.9 || inputX < -0.9)
+        {
+            if (!transform.Find("AudioPneus").GetComponent<AudioSource>().isPlaying)
+            {
+                transform.Find("AudioPneus").GetComponent<AudioSource>().Play();
+            }
+        }
+        else
+        {
+            transform.Find("AudioPneus").GetComponent<AudioSource>().Stop();
         }
     }
 
