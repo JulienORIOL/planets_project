@@ -167,6 +167,16 @@ public class RaceManager : MonoBehaviour
         {
             Application.Quit();
         }
+        else if (Input.GetKeyDown(KeyCode.Space)) // if the player press space on discover turn, we start the race
+        {
+            Debug.Log("Space pressed on race status " + raceStatus);
+            if (raceStatus == 0)
+            {
+                SetRaceStatus(1);
+                // destroy the invisible car
+                GameObject.Find("invisibleAI").SetActive(false);
+            }
+        }
     }
 
     void RestartGame()

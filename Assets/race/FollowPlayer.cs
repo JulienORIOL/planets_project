@@ -94,6 +94,21 @@ public class FollowPlayer : MonoBehaviour
         {
             ChangeCameraPreset();
         }
+        /*
+        // Définir la position de la caméra par rapport au joueur avec un offset
+        Vector3 desiredPosition = player.position - player.forward * distanceBehind + Vector3.up * heightAbove;
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * rotationSpeed);
+
+        // Calculer la rotation de la caméra en fonction de la rotation de la voiture
+        Quaternion targetRotation = Quaternion.LookRotation(player.position - transform.position, Vector3.up);
+
+        // Interpoler en douceur vers la nouvelle rotation
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        */
+    }
+
+    void FixedUpdate() // make the camera moves on fixed update to avoid jittering
+    {
         // Définir la position de la caméra par rapport au joueur avec un offset
         Vector3 desiredPosition = player.position - player.forward * distanceBehind + Vector3.up * heightAbove;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * rotationSpeed);

@@ -39,15 +39,22 @@ public class CarControler : MonoBehaviour
         inputY = Input.GetAxis("Vertical");
         inputX = Input.GetAxis("Horizontal");
         // "v" key to switch to drone mode
+
+        // if speed is more than 24, show particles
+        if (rg.velocity.magnitude > 24)
+        {
+            transform.Find("sparks").gameObject.SetActive(true);
+        }
+        else
+        {
+            transform.Find("sparks").gameObject.SetActive(false);
+        }
     }
 
     void FixedUpdate() // Apply physics here
     {
-        // avant le début de la course, on ne peut pas bouger
-        if (raceManager.GetRaceStatus() == 0) return;
-
         // si la course est en cours, on peut bouger avec les touches directionnelles
-        else if (raceManager.GetRaceStatus() == 1)
+        if (raceManager.GetRaceStatus() == 1)
         {
             float speed = inputY > 0 ? forwardMoveSpeed : backwardMoveSpeed;
             if (inputY > 0.001)
@@ -60,6 +67,9 @@ public class CarControler : MonoBehaviour
             float rotation = inputX * steerSpeed * Time.fixedDeltaTime;
             transform.Rotate(0, rotation, 0, Space.World);
         }
+
+        // avant le début de la course, on ne peut pas bouger
+        else if (raceManager.GetRaceStatus() == 0) return;
 
         else if (raceManager.GetRaceStatus() == 2) // si la course est terminée, l'IA prend le relais
         {
