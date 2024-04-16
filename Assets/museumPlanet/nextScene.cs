@@ -7,6 +7,7 @@ public class nextScene : MonoBehaviour
 {
     public string scenename;
     public SpotlightScript spotlightScript; // Référence au script Spotlight
+    public Animator crossFade;
 
     void OnTriggerEnter(Collider other)
     {
@@ -17,8 +18,14 @@ public class nextScene : MonoBehaviour
                 Debug.Log("On a un spotlightScript");
                 spotlightScript.GoToNextLevel(); // Informe le SpotlightScript avant de changer de scène
             }
-            
-            SceneManager.LoadScene(scenename);
+            StartCoroutine(LoadNextScene());
         }
+    }
+
+    IEnumerator LoadNextScene()
+    {
+        crossFade.SetTrigger("Start");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(scenename);
     }
 }

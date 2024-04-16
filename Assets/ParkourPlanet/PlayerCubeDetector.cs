@@ -11,7 +11,6 @@ public class PlayerCubeDetector : MonoBehaviour
     {
         if (currentCubeTransform == null)
         {
-            Debug.Log("On a quitté un cube");
             // Incrémente le timer si le joueur n'est pas sur un cube
             timeSinceLastCube += Time.deltaTime;
 

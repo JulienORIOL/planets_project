@@ -27,20 +27,20 @@ public class RotationScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            horizontalInput = Input.GetAxis("Horizontal"); ; // Avancer
+            horizontalInput = -Input.GetAxis("Horizontal");
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            horizontalInput = Input.GetAxis("Horizontal"); ; // Reculer
+            horizontalInput = -Input.GetAxis("Horizontal");
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            verticalInput = Input.GetAxis("Vertical");  // Aller à gauche
+            verticalInput = Input.GetAxis("Vertical");
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            verticalInput = Input.GetAxis("Vertical");  // Aller à droite
+            verticalInput = Input.GetAxis("Vertical");
         }
 
         // Calculer la rotation en fonction des entrées clavier

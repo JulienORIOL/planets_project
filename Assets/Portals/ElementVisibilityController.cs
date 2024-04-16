@@ -8,36 +8,52 @@ public class ElementVisibilityController : MonoBehaviour
 
     void Start()
     {
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer renderer in renderers)
-        {
-            renderer.enabled = false;
-        }
-    }
+        // Pour réinitialiser mon compteur à la main
+        //PlayerPrefs.SetInt("ElementVisible", 0);
+        //PlayerPrefs.Save();
 
-    public void ActivateRenderers()
-    {
-        // Accède à tous les MeshRenderers dans ce GameObject et ses enfants
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer renderer in renderers)
+        if (PlayerPrefs.GetInt("ElementVisible", 0) == 1)
         {
-            renderer.enabled = true; // Active chaque MeshRenderer
+            gameObject.SetActive(true);
+            Debug.Log("On a bien set à true");
         }
-    }
+        else
+        {
+            gameObject.SetActive(false);
+            Debug.Log("On a bien set à false");
+        }
 
-    void Update()
-    {
-        // Vérifie si la référence au SpotlightScript est présente
         if (spotlightScript != null)
         {
-            Debug.Log("On a un bail");
-            // Vérifie si le niveau actuel dépasse le nombre de rotations de portail
-            if (spotlightScript.GetCurrentLevel() >= spotlightScript.GetPortalRotationsLength() - 2)
-            {
-                Debug.Log("C'est la fin car la valeur du compteur est de spotlightScript.GetCurrentLevel()");
-                // Active ce GameObject (l'élément) pour le faire "apparaître"
-                ActivateRenderers();
-            }
+            spotlightScript.OnLevelChanged += CheckVisibility;
+        }
+    }
+
+    void CheckVisibility()
+    {
+        Debug.Log("Niveau actuel : " + spotlightScript.GetCurrentLevel());
+        Debug.Log("Longueur de ma liste de positions : " + spotlightScript.GetPortalRotationsLength());
+        if (spotlightScript.GetCurrentLevel() >= spotlightScript.GetPortalRotationsLength() - 1)
+        {
+            Debug.Log("On set mon gameObject à true");
+            gameObject.SetActive(true);
+            PlayerPrefs.SetInt("ElementVisible", 1);
+        }
+        else
+        {
+            Debug.Log("On set mon gameObject à false");
+            gameObject.SetActive(false);
+            PlayerPrefs.SetInt("ElementVisible", 0);
+        }
+        PlayerPrefs.Save();
+    }
+
+    void OnDestroy()
+    {
+        // Se désabonne de l'événement pour éviter des fuites de mémoire
+        if (spotlightScript != null)
+        {
+            spotlightScript.OnLevelChanged -= CheckVisibility;
         }
     }
 }

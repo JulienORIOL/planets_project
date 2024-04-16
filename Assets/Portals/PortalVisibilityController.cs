@@ -12,11 +12,16 @@ public class PortalVisibilityController : MonoBehaviour
         if (spotlightScript != null)
         {
             // Vérifie si le niveau actuel dépasse le nombre de rotations de portail
-            if (spotlightScript.GetCurrentLevel() >= spotlightScript.GetPortalRotationsLength())
+            if (spotlightScript.GetCurrentLevel() >= spotlightScript.GetPortalRotationsLength() - 1)
             {
-                // Désactive ce GameObject (le portail) pour le faire "disparaître"
-                gameObject.SetActive(false);
+                StartCoroutine(DeactivateAfterDelay(2)); // Appelle la coroutine avec un délai de 2 secondes
             }
         }
+    }
+
+    IEnumerator DeactivateAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Attend avant de continuer
+        gameObject.SetActive(false); // Désactive le GameObject
     }
 }

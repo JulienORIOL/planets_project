@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DialogueEditor;
 
 public class SpotlightScript : MonoBehaviour
 {
@@ -8,12 +9,26 @@ public class SpotlightScript : MonoBehaviour
     public Vector3[] portalRotations = new Vector3[0];
     private int currentLevel; // Compteur de niveau
 
+    public delegate void LevelChangeAction();
+    public event LevelChangeAction OnLevelChanged;
+
+    [SerializeField] private NPCConversation[] conversations;
+
     private void OnCollisionExit(Collision collision)
     {
         // Vérifie si le joueur entre sur la plateforme
         if (collision.gameObject.CompareTag("Player")) // Assurez-vous que votre joueur a le tag "Player"
         {
             UpdateSpotlightRotation();
+            if (currentLevel < conversations.Length)
+            {
+                ConversationManager.Instance.StartConversation(conversations[currentLevel]);
+                Debug.Log("Conversation for level " + currentLevel + " started.");
+            }
+            else
+            {
+                Debug.Log("No conversation available for level " + currentLevel);
+            }
         }
     }
 
@@ -31,8 +46,8 @@ public class SpotlightScript : MonoBehaviour
         currentLevel = PlayerPrefs.GetInt("CurrentLevel", 0);
 
         // Pour réinitialiser mon compteur à la main
-        PlayerPrefs.SetInt("CurrentLevel", 3);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetInt("CurrentLevel", 0);
+        //PlayerPrefs.Save();
 
         portalRotations = new Vector3[]
         {
@@ -46,12 +61,21 @@ public class SpotlightScript : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        Debug.Log("On passe dans la méthode NextLevel");
+        Debug.Log("On passe dans la méthode NextLevel : on était au niveau " + currentLevel + " et on passe au niveau " + (currentLevel + 1));
         currentLevel = currentLevel + 1; // Incrémente et boucle le niveau
         PlayerPrefs.SetInt("CurrentLevel", currentLevel);
         PlayerPrefs.Save();
         UpdateSpotlightRotation(); // Met à jour la rotation du spotlight
-    }
+
+        // Logique de changement de niveau
+        Debug.Log("On est face à LA méthode");
+        if (OnLevelChanged != null)
+        {
+            Debug.Log("On rentre dedans dans Spotlight");
+            OnLevelChanged();
+        }
+            
+}
 
     void UpdateSpotlightRotation()
     {
