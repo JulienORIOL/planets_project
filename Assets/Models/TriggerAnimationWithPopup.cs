@@ -14,6 +14,8 @@ public class TriggerAnimationWithPopup : MonoBehaviour
     void Start()
     {
         popup.SetActive(false);
+        Debug.Log("Nom : " + popup.name);
+        Debug.Log("Autre nom : " + prefab.name);
     }
 
     void OnTriggerEnter(Collider other)
@@ -48,5 +50,6 @@ public class TriggerAnimationWithPopup : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         Instantiate(prefab, Spawnpoint.position, Spawnpoint.rotation);
+        Debug.Log("On vient de faire apparaître le portail");
     }
 }

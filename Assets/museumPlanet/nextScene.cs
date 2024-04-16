@@ -24,7 +24,11 @@ public class nextScene : MonoBehaviour
 
     IEnumerator LoadNextScene()
     {
-        crossFade.SetTrigger("Start");
+        if(crossFade)
+        {
+            crossFade.SetTrigger("Start");
+        }
+        
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(scenename);
     }
