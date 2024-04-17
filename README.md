@@ -48,6 +48,23 @@ A nouveau, aucun tutoriel particulier n'a été suivi pour mettre en place tout 
 
 ### Planète du musée
 
+Sur cette planète, la majorité du contenu a été réalisé via des assets qui ont ensuite été modifié pour les besoins de la planète. A l'exception des modèles blenders de chaque membre du groupe.
+Les diffèrents assets importés sont :
+- Le musée, qui a été aménagé en supprimant/modifiant des pièces, notamment pour incorporer le terrain de basket, et la rampe pour accéder a l'arbre.
+- La rampe (https://www.cgtrader.com/items/190589/download-page) permettant d'accéder à l'arbre via le tunnel. 
+- Le tunnel qui suit la rampe (https://www.turbosquid.com/3d-models/square-tunnel-rotation-low-poly-1762165) et qui mène a l'arbre a été entouré de matériaux noirs pour augmenter le contraste.
+- Le dome qui contient l'arbre (https://sketchfab.com/3d-models/sci-fi-future-building-2-simple-dome-d885fdb25ed846779fc711917fbeeed2).
+- Le sol du dome est un terrain aménagé notamment grâce aux layers de ce pack (https://assetstore.unity.com/packages/3d/vegetation/environment-pack-free-forest-sample-168396)
+- Le portail vient du pack de portails mentionné plus tôt.
+
+En ce qui concerne les tutoriaux suivis, nous nous sommes aidé des suivants :
+- Le rétroprojecteur a été réalisé grâce à cette vidéo youtube (https://www.youtube.com/watch?v=uU26wucC02s&t=54s) il suffisait ensuite d'importer la vidéo souhaitée et d'ajuster les différents paramètre pour notre cas.
+- Déclencher des animations lors d'un évènement (https://www.youtube.com/watch?v=npCqMT-M2EQ&t=427s)
+- Afficher un texte lors d'un contacte avec un collider (https://www.youtube.com/watch?v=NTkqHGi-sPA)
+- Comment faire apparaitre des objets (https://www.youtube.com/watch?v=_Xrw2EEhzI4&t=324s)
+
+
+
 ### Planète du parcours de l'équilibriste
 
 Pour cette planète, les modèles qui ont été créés entièrement à la main sont :
